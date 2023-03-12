@@ -1,14 +1,28 @@
 # Synt Mate M365
 
-Tired of having to manually update your Microsoft 365 calendars across multiple accounts?
-
-Look no further than Sync Mate M365!
+Tired of having to manually update your Microsoft 365 calendars across multiple accounts? Look no further than Sync Mate M365!
 
 With Sync Mate M365, you can say goodbye to missed appointments and scheduling conflicts. The app creates a dummy event in each of your calendars whenever a new event is added, updated, or removed in any account. This ensures that all of your calendars are always up to date, no matter which device or account you're using.
 
 Working Demo - [Please visit](https://syncmatem365.azurewebsites.net/). 
 
 [![Hack Together: Microsoft Graph and .NET](https://img.shields.io/badge/Microsoft%20-Hack--Together-orange?style=for-the-badge&logo=microsoft)](https://github.com/microsoft/hack-together)
+
+How it works
+
+![banner2](https://user-images.githubusercontent.com/9557557/224555045-df3f4acf-57ec-41b4-8f8e-3625152660c2.jpeg)
+
+
+# Screenshots 
+Manage Accounts
+
+![image](https://user-images.githubusercontent.com/9557557/224554920-b5f4b703-9e53-458c-8206-fd58e38db921.png)
+
+Consolidated Calendar View
+![image](https://user-images.githubusercontent.com/9557557/224554883-749beae4-b9b0-4c2d-9246-0e2c1a42bd83.png)
+
+Meeting details popup
+![image](https://user-images.githubusercontent.com/9557557/224554907-38e8b869-fe91-407b-9b0e-e2318587e0fe.png)
 
 # Technical Notes
 

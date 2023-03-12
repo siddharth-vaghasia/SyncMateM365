@@ -1,0 +1,293 @@
+﻿@using Microsoft.Graph
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@model EventViewModel
+@{
+    ViewData["Title"] = "Calendar";
+    var data = Model;
+}
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<style>
+    .sb-checkbox {
+        margin: 10px;
+    }
+
+    .sb-checkbox {
+        display: inline-block;
+        font-size: 0;
+    }
+
+    .sb-checkbox__input {
+        display: none;
+    }
+
+        .sb-checkbox__input:checked + .sb-checkbox__label:after {
+            opacity: 1;
+        }
+
+    .sb-checkbox__label {
+        display: inline-block;
+        width: 16px;
+        height: 16px;
+        position: relative;
+        cursor: pointer;
+    }
+
+        .sb-checkbox__label:before {
+            content: '';
+            width: 16px;
+            height: 16px;
+            border: 2px solid;
+            box-sizing: border-box;
+            display: inline-block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            border-radius: 2px;
+        }
+
+        .sb-checkbox__label:after {
+            content: 'done';
+            font-family: 'Material Icons';
+            font-size: 14px;
+            line-height: 16px;
+            text-align: center;
+            width: 16px;
+            height: 16px;
+            display: block;
+            border-radius: 2px;
+            overflow: hidden;
+            text-align: center;
+            opacity: 0;
+            transition: 0.2s opacity;
+        }
+
+    .sb-checkbox__label--green:before {
+        border-color: #66bb6a;
+    }
+
+    .sb-checkbox__label--green:after {
+        background-color: #66bb6a;
+        color: #fff;
+    }
+
+    .sb-checkbox__label--red:before {
+        border-color: #ef5350;
+    }
+
+    .sb-checkbox__label--red:after {
+        background-color: #ef5350;
+        color: #fff;
+    }
+
+    .sb-checkbox__label--blue:before {
+        border-color: #5c6bc0;
+    }
+
+    .sb-checkbox__label--blue:after {
+        background-color: #5c6bc0;
+        color: #fff;
+    }
+
+    .sb-checkbox__label--orange:before {
+        border-color: #ffa726;
+    }
+
+    .sb-checkbox__label--orange:after {
+        background-color: #ffa726;
+        color: #fff;
+    }
+    .my-accounts{
+        font-weight: bold;
+        text-decoration: underline;
+                display:block;
+                font-size:18px;
+    }
+    #lottieplayer{
+        height: 320px;
+    margin: 0 auto;
+    padding: 10px;
+    margin-top:100px;
+    }
+    #calendar .fc-header-toolbar{
+        padding:0px 10px;
+    }
+    #calendar  .fc-view-harness{
+        margin:0px 10px;
+    }
+    .fc-daygrid-event-harness span{
+        padding:3px 5px;
+        cursor:pointer;
+    }
+</style>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.3.1/main.min.js"></script>
+
+
+<script>
+
+    //console.log(JSON.parse(objView));
+        document.addEventListener("DOMContentLoaded", function () {
+            //var objView = JSON.parse("@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Events)".replace(/&quot;/g, '"'));
+            debugger;
+            var data1= "@Newtonsoft.Json.JsonConvert.SerializeObject(Model.Events)".replace(/&quot;/g, '"');
+            //    var data2=data1.replaceAll("\r\n",'').replaceAll("&lt;",'<').replaceAll("&gt;",">").replaceAll("&#x27;","'").replaceAll('="',"='").replaceAll('" ',"' ").replaceAll('">',"'>");
+            //    var data3=data2.replace("\&quot","'");
+                var objView=JSON.parse(data1)
+            var calendarEl = document.getElementById("calendar");
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                now: new Date(),
+                scrollTime: "00:00",
+                aspectRatio: 1.8,
+                timeZone: 'local',
+                headerToolbar: {
+                    left: "today prev,next",
+                    center: "title",
+                    right: "dayGridMonth,timeGridWeek,timeGridDay,listMonth"
+                },
+                initialView: "dayGridMonth",
+                navLinks: true, // can click day/week names to navigate views
+                eventLimit: true, // allow "more" link when too many events
+                events: function (fetchInfo, successCallback, failureCallback) {
+                    successCallback(objView);
+                },
+               eventContent :function(arg){
+                   let italicEl = document.createElement('span')
+                    italicEl.style.backgroundColor = arg.backgroundColor;
+                   italicEl.style.whiteSpace = "break-spaces";
+                   italicEl.style.color = "white";
+                  if (arg.event.title == "Not Available" || arg.event.title ==  "Synced using Sync tool") {
+                       arg.event.setProp('display', 'none');
+                      return false;
+                  } else {
+                      italicEl.innerHTML = arg.timeText + "-" + arg.event.title;
+                  }
+
+                  let arrayOfDomNodes = [ italicEl ]
+                  return { domNodes: arrayOfDomNodes }
+                },
+                eventClick: function(info) {
+                    info.jsEvent.preventDefault();
+                    $('#modelTitle').html("Meeting Details");
+                    var body = info.event._def.extendedProps.body;
+                    $(".card-title").html("<strong>Subject</strong> - " + info.event.title);
+                    $(".card-text").html("<strong>Meeting Date and Time</strong> </br>" + info.event.start.toDateString() + ", "  + info.event.start.toLocaleTimeString() 
+                    + "</br>" + info.event.end.toDateString() + ", " + info.event.end.toLocaleTimeString() ) ;
+                    
+                    if (body != "Not an online meeting") {
+                        $('.card-link').attr("href", body);
+                        $('.card-link').html("Join link");
+                    }
+                    else{
+                        $('.card-link').attr("href", "#")
+                        $('.card-link').html("Meeting link not available");
+                    }
+           
+                    var toAppend = "<p class='card-text' style='margin-left: 10px;'><strong>Organizer</strong> <br>" + info.event.extendedProps.organizer + "</p>"
+                    toAppend += '<p class="card-text" id="div-id1" style="margin-left: 10px;"><span><strong>Attendees</strong></span><ul class="ul-class" id="ul-id1">';
+                    for (var i = 1; i < info.event.extendedProps.attendees.length; i++) {
+                            toAppend += '<li class=""list-group-item">' + info.event.extendedProps.attendees[i] + '</li>';
+                    }
+                    toAppend += "</p>"
+                    $(".list-group").html(toAppend)
+                    $("#eventdetailspopup").modal('show');
+                },
+                eventDidMount: function (arg) {
+                    var cs = document.querySelectorAll(".cs");
+                    cs.forEach(function (v) {
+                        if (v.checked) {
+                        if (arg.event.extendedProps._id === v.value) {
+                                arg.el.style.display = "block";
+                            }
+                        } else {
+                        if (arg.event.extendedProps._id === v.value) {
+                                arg.el.style.display = "none";
+                            }
+                        }
+                    });
+                }
+            });
+            calendar.render();
+
+        var csx = document.querySelectorAll(".cs");
+            csx.forEach(function (el) {
+                el.addEventListener("change", function () {
+                    calendar.refetchEvents();
+                    console.log(el);
+                });
+            });
+        });
+
+</script>
+
+
+<div id='calendar-container'>
+    <div class='row'>
+        <div id='left_panel listResults' class='col-sm-12 col-md-3 col-lg-3'>
+            <div class="container-padding">
+                <span class="my-accounts">My Accounts</span>
+            @foreach (var item in Model.UserInfos)
+            {
+                <div class="sb-checkbox">
+                  <i class="fa-solid fa-user-large"></i>
+                  <input type="checkbox" class="sb-checkbox__input cs" id="@item.UserPrincipalName" name="@item.UserPrincipalName" value="@item.UserPrincipalName" checked="checked">
+                  <label class="sb-checkbox__label sb-checkbox__label--@item.BackgroundColor" style="background-color:@item.BackgroundColor;color:white" for="@item.UserPrincipalName"></label>
+                </div>
+                <label style="color:@item.BackgroundColor">@item.UserPrincipalName</label>
+                @* <div class="checkbox checkbox-circle checkbox-@item.BackgroundColor" style="padding: 1rem">
+                    <input class="cs" id="@item.UserPrincipalName" type="checkbox" value="@item.UserPrincipalName">
+                    <label> @item.UserPrincipalName</label>
+                </div>*@
+                <br>
+               @* <br>
+                <input class="cs" value="@item.UserPrincipalName" type="checkbox" checked>@item.UserPrincipalName<br>*@
+            }
+            <lottie-player id="lottieplayer" src="https://assets7.lottiefiles.com/packages/lf20_98vgucqb.json"
+                           background="transparent" speed="1" hover loop autoplay></lottie-player>
+            </div>
+        </div>
+        <div id='calendar' class='col-sm-12 col-md-9 col-lg-9 container-padding'>
+        </div>
+    </div>
+</div>
+
+<div id="eventdetailspopup" class="modal fade">
+       
+   <div class="modal-dialog">
+              
+      <div class="modal-content">
+                     
+         <div class="modal-header">
+                            
+            <h4 class="modal-title" id="modelTitle" />
+                        
+         </div>
+                     
+         <div class="modal-body">
+              <div class="card" style="width: 100%;">
+              <div class="card-body">
+                <h5 class="card-title">Card title</h5>
+                <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item">Cras justo odio</li>
+                <li class="list-group-item">Dapibus ac facilisis in</li>
+                <li class="list-group-item">Vestibulum at eros</li>
+              </ul>
+              <div class="card-body">
+                <a class="card-link">Join link</a>
+              </div>
+             </div>
+         </div>
+                     
+         <div class="modal-footer">
+                            
+            <button type="button" class="btn btn-default" data-bs-dismiss="modal" >Close</button>
+                        
+         </div>
+                 
+      </div>
+          
+   </div>
+</div>
+@* <div id='calendar'></div>*@

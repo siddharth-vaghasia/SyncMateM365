@@ -1,0 +1,91 @@
+﻿@model List<UserInfo>
+@{
+    ViewData["Title"] = "Accounts";
+}
+<style>
+    #accountsview .description {
+        margin: 10px;
+    }
+
+    #lottieplayer {
+        height: 320px;
+        margin: 0 auto;
+        padding: 10px;
+    }
+
+    .table-responsive {
+        padding-right: 10px;
+    }
+</style>
+<div id="accountsview">
+
+    <div class="row">
+        <div class='col-sm-12 col-md-3 col-lg-3'>
+            <p class="description">
+                Here you can simply connect your multiple Microsoft 365 accounts to the app and let it take care of the rest. You can also remove the account as and when needed.
+            </p>
+            <lottie-player id="lottieplayer1" src="https://assets3.lottiefiles.com/packages/lf20_dn6rwtwl.json"
+                           background="transparent" speed="1" loop autoplay></lottie-player>
+        </div>
+        <div class='col-sm-12 col-md-9 col-lg-9 container-padding'>
+            <div class="table-responsive">
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th scope="col">Email Id</th>
+                            <th scope="col">Subscription Id</th>
+                            <th scope="col">User Id</th>
+                            <th scope="col">Tenant Id</th>
+                            <th scope="col">Remove</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.UserPrincipalName</td>
+                                <td>@item.SubscriptionId</td>
+                                <td>@item.UserId.Substring(11).Split(".")[0]</td>
+                                <td>@item.UserId.Substring(11).Split(".")[1]</td>
+                                @if (User.Identity?.IsAuthenticated == true && User.Identity.Name != null
+                               && User.Identity?.Name.ToLower() == item.UserPrincipalName.ToLower())
+                                {
+                                    <td></td>
+                                }
+                                else
+                                {
+                                    <td><i class="fa fa-trash" role="button" onclick="deleteAccount('@item.SubscriptionId')"></i></td>
+                                }
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <a class="btn btn-outline-primary" asp-controller="Home" asp-action="SwitchUser">+ Add New Account</a>
+        </div>
+    </div>
+</div>
+<lottie-player id="lottieplayer" src="https://assets4.lottiefiles.com/datafiles/AtGF4p7zA8LpP2R/data.json"
+               background="transparent" speed="1" style="width: 350px; height: 100%; margin: 0 auto; display: none" hover loop autoplay></lottie-player>
+<script>
+    var deleteAccount = (subscriptionid) => {
+        console.log(subscriptionid);
+        $('#accountsview')[0].style.display = "none";
+        $('#lottieplayer')[0].style.display = "block";
+        $.ajax({
+            url: "/Home/DeleteAccount",
+            type: "GET",
+            data: { subscriptionid: subscriptionid },
+            success: function (result) {
+                // handle the response from the server
+                $('#accountsview')[0].style.display = "block";
+                $('#lottieplayer')[0].style.display = "none";
+                window.location.reload();
+            },
+            error: function (jqXHR, exception) {
+                $('#accountsview')[0].style.display = "block";
+                $('#lottieplayer')[0].style.display = "none";
+            }
+        });
+    }
+</script>

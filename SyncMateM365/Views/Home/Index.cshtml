@@ -1,0 +1,196 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<!-- iNTRO Section -->
+<style>
+#home{
+    margin:10px auto;
+}
+</style>
+<div class="container w3-container"  id="home">
+    <div class="row">
+        <div class='col-sm-12 col-md-4 col-lg-4'>
+          <h3>Welcome to Sync Mate M365</h3>
+          <p><strong>Tired of having to manually update your Microsoft 365 calendars across multiple accounts?</strong></p> 
+          <p>Look no further</p>
+          <p>With Sync Mate M365, you can say goodbye to missed appointments and scheduling conflicts. The app creates a dummy event in each of your calendars whenever a new event is added, updated, or removed in any account. This ensures that all of your calendars are always up to date, no matter which device or account you're using.</p>
+        </div>
+        <div class='col-sm-12 col-md-8 col-lg-8'>
+            <img class="w3-image w3-round-large" src="./img/banner1.jpeg" alt="Buildings">
+        </div>
+    </div>
+    <div class="row">
+        <div class='col-sm-12 col-md-8 col-lg-8'>
+           <img class="w3-image w3-round-large" src="./img/banner2.jpeg" alt="Buildings">
+        </div>
+        <div class='col-sm-12 col-md-4 col-lg-4'>
+          <p>Sync Mate M365 is a powerful app designed to help you manage multiple Microsoft 365 accounts by synchronizing their calendars seamlessly. With Sync Mate M365, you no longer must worry about missing important events or appointments across your accounts.</p>
+          <p>Sync Mate M365 is incredibly easy to use. Simply connect your Microsoft 365 accounts to the app and let it take care of the rest. You can remove the account as and when needed.</p>
+          <p>If you are a Technical consultant serving multiple clients and would have multiple accounts, Sync Mate M365 is the perfect tool for you. Simple login with any one account to Get Started and experience the benefits of seamless calendar synchronization across your Microsoft 365 accounts.</p>
+        </div>
+    </div>
+  <!--<div class="w3-row-padding">
+    <div class="w3-col m6">
+    </div>
+    <div class="w3-col m6">
+      <img class="w3-image w3-round-large" src="./img/banner2.jpeg" alt="Buildings">
+    </div>
+  </div>-->
+</div>
+
+<!-- call to action -->
+<div class="w3-container w3-row w3-center w3-white w3-padding-64">
+    <div class="w3-col w3-xxlarge call-to-action">
+       <a href="https://github.com/microsoft/hack-together/"> Built as part of Hack Together: Microsoft Graph and .NET 🦒</a>
+    </div>
+</div>
+
+
+<!-- Features Section -->
+<div class="w3-container" style="padding:20px 16px" id="features">
+  <h3 class="w3-center">Features</h3>
+  
+  <div class="w3-row-padding w3-center" style="margin-top:64px">
+    <div class="w3-quarter">
+      <i class="fa fa-sign-in w3-margin-bottom w3-jumbo w3-center"></i>
+      <p class="w3-large">Single Login</p>
+      <p>Login to your primary Microsoft 365 account and connect all your other accounts.</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-object-group w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Multiple Account Sync</p>
+      <p>Sync multiple Microsoft 365 accounts with ease.</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-cogs w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">One-Time Setup</p>
+      <p>Add your accounts once and Sync Mate M365 will automatically sync all connected accounts.</p>
+    </div>
+    <div class="w3-quarter">
+      <i class="fa fa-cog w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Automatic Event Syncing</p>
+      <p>Whenever an event is added, updated, or removed from any one of your accounts, Sync Mate M365 will create a new dummy event in all connected accounts.</p>
+    </div>
+  </div>
+  <div class="w3-row-padding w3-center" style="margin-top:64px">
+    <div class="w3-third">
+      <i class="fa fa-minus-square-o w3-margin-bottom w3-jumbo w3-center"></i>
+      <p class="w3-large">Account Removal</p>
+      <p>Easily remove any account you no longer wish to sync events for.</p>
+    </div>
+    <div class="w3-third">
+      <i class="fa fa-connectdevelop w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Comprehensive Syncing</p>
+      <p>Sync Mate M365 also syncs event updates and removals across all connected accounts.</p>
+    </div>
+    <div class="w3-third">
+      <i class="fa fa-calendar w3-margin-bottom w3-jumbo"></i>
+      <p class="w3-large">Consolidated Calendar View</p>
+      <p>View all events from all connected accounts in a single, easy-to-use calendar. Use color coding to differentiate events from different accounts.</p>
+    </div>   
+  </div>
+</div>
+
+<!-- Technical Section -->
+<div class="w3-container w3-pale-blue w3-padding-64" id="technical">
+    <div class="w3-row-padding">
+        <div class="w3-col m12 w3-center">
+            <h3>Technical Notes</h3>
+        </div>
+      <div class="w3-col m6">
+        
+        <ul>
+            <li>App Uses Graph API Change Notifications API.</li>
+            <li>Once you login or add new account,App creates a subscription with notification url to our webhook.</li>
+            <li>App is using Delegated permission to get all the calendar events and to Create an event.</li>
+            <li>App creates mapping between all of your accounts and their respective subscription IDs, which is linked to a unique identifier that is stored during your initial login.</li>
+        </ul>    
+      </div>
+      <div class="w3-col m6">
+        
+        <ul>
+            <li>App does not store any of calendar data in database.</li>
+            <li>
+               Below is list of information stored in to our database(Cloud Mongo DB).
+                <ul>
+                    <li>Subscription id for each account</li>
+                    <li>User Principal name (generally email)</li>
+                    <li>User Id (Azure AD Unique Identifier)</li>
+                    <li>Tenant Id</li>
+                    <li>Refresh Token</li>
+                    <li>Meeting Id</li>
+                </ul>
+
+            </li>
+        </ul>  
+      </div>
+    </div>
+  </div>
+
+
+  <!-- Future Plans Section -->
+<div class="w3-container  w3-padding-64" id="futureplans">
+    <div class="w3-row-padding">
+        <div class="w3-col m12 w3-center">
+        <h3>We can extend this to</h3>
+    </div>
+          <div class="w3-col m12 w3-center">
+        
+          <ul class="futureplans">
+            <li><i class="fa fa-clock-o w3-margin-bottom w3-jumbo"></i>Providing ablity to change Teams Status across Tenant</li>
+            <li><i class="fa fa-calendar-check-o w3-margin-bottom w3-jumbo"></i>Notify on any one account(main) about when new email is recieved</li>
+            <li><i class="fa fa-bars w3-margin-bottom w3-jumbo"></i>Teams Calls Notifications</li>
+            <li><i class="fa fa-comments w3-margin-bottom w3-jumbo"></i> Teams Chat</li>
+            <li><i class="fa fa-link w3-margin-bottom w3-jumbo"></i> Teams channel message when someone mentions you.</li>
+            
+          </ul>
+      </div>
+     
+    </div>
+  </div>
+
+  
+<!-- Team Section -->
+<div class="w3-container w3-pale-blue font-black" style="padding:20px 16px" id="team">
+  <h3 class="w3-center">THE TEAM</h3>
+  
+  <div class="w3-row-padding w3-grayscale" style="margin-top:32px">
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <img src="./img/Sid.jpg" alt="John" style="width:100%;max-height:250px">
+        <div class="w3-container w3-white">
+          <h3>Siddharth Vaghasia</h3>
+          <p class="font-black"><a href="https://github.com/siddharth-vaghasia" class="w3-button w3-pale-blue w3-block font-black"><i class="fa fa-github" aria-hidden="true"></i> GITHUB</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <img src="./img/kunj.png" alt="Jane" style="width:100%;max-height:250px">
+        <div class="w3-container w3-white">
+          <h3>Kunj Sangani</h3>
+          <p class="font-black"><a href="https://github.com/kunj-sangani" class="w3-button w3-pale-blue w3-block font-black"><i class="fa fa-github" aria-hidden="true"></i> GITHUB</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <img src="./img/dharati.jpg" alt="Mike" style="width:100%;max-height:250px">
+        <div class="w3-container w3-white">
+          <h3>Dharati Patel</h3>
+          <p class="font-black"><a href="https://github.com/dharati1910/" class="w3-button w3-pale-blue w3-block font-black"><i class="fa fa-github" aria-hidden="true"></i> GITHUB</a></p>
+        </div>
+      </div>
+    </div>
+    <div class="w3-col l3 m6 w3-margin-bottom">
+      <div class="w3-card">
+        <img src="./img/Santosh-.jpg" alt="Dan" style="width:100%;max-height:250px">
+        <div class="w3-container w3-white">
+          <h3>Santosh Sarnobat</h3>
+          <p class="font-black"><a href="https://github.com/santoshsarnobat" class="w3-button w3-pale-blue w3-block font-black"><i class="fa fa-github" aria-hidden="true"></i> GITHUB</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

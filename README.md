@@ -40,10 +40,15 @@ Working Demo - [Please visit](https://syncmatem365.azurewebsites.net/).
  - Create Azure AD App Registration and provided required permission as Calender.Read, Calender.ReadWrite plus basic open id permissions
  - Replace the values in appsettings.json in both Scheduler and Main Solution
  - Create the free mongo db client account https://www.mongodb.com/cloud/atlas/register and create database and collection
+
     "DatabaseName": "SyncEvent",
+
     "UserInfoCollectionName": "UserInfo",
+
     "UserMappingCollectionName": "UserMapping",
+
     "MeetingMappingCollectionName": "MeetingMapping"
+    
 - Run the project
 
 Feel free to reach out to us if any help required in setting up the project.
